@@ -72,7 +72,10 @@
       align-items: flex-start;
       width: 100%;
       padding: 0.5rem 0;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
+    .flipbook-outer.ready { opacity: 1; }
 
     #flipbook { background: transparent; }
 
@@ -531,6 +534,7 @@
         setTimeout(() => {
           initFlipbook(w, h);
           document.getElementById('loadingScreen').classList.add('hidden');
+          document.querySelector('.flipbook-outer').classList.add('ready');
         }, 400);
 
       } catch(e) {

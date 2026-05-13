@@ -395,7 +395,7 @@
     const CONFIG = {
       // 1. Pegá acá el ID de tu Google Sheet (está en la URL del Sheet)
       //    Ejemplo: https://docs.google.com/spreadsheets/d/ [ESTE_ES_EL_ID] /edit
-      SHEET_ID: "TU_SHEET_ID_AQUI",
+      SHEET_ID: "1nhEwxR94PUPRuOPl7mkriiFbalNP4oZAtQVBcCofaaM",
 
       // 2. Nombre exacto de la hoja dentro del Sheet (la pestaña)
       SHEET_NAME: "Catalogo",
@@ -422,40 +422,41 @@
 
     document.getElementById('validityDates').textContent = CONFIG.VALIDITY;
 
-    // URL pública del Sheet en formato JSON (el Sheet debe estar publicado)
-    const SHEET_URL = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(CONFIG.SHEET_NAME)}`;
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSJKVRqEYxtXM41ac6RuyS3aXo2mjSI_5mLl8l8jS6i-PGzNe8cQyXzBIVV7WYD8BapahEaFX-SyaoQ/pub?gid=0&single=true&output=csv";
+
+    function parseCSV(text) {
+      const lines = text.trim().split('\n');
+      const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, '').toUpperCase());
+      return lines.slice(1).map(line => {
+        const vals = [];
+        let cur = '', inQ = false;
+        for (let ch of line) {
+          if (ch === '"') { inQ = !inQ; }
+          else if (ch === ',' && !inQ) { vals.push(cur.trim()); cur = ''; }
+          else { cur += ch; }
+        }
+        vals.push(cur.trim());
+        const obj = {};
+        headers.forEach((h, i) => obj[h] = (vals[i] || '').replace(/"/g, '').trim());
+        return obj;
+      }).filter(r => r['PRODUCTO']);
+    }
 
     async function loadCatalog() {
       try {
-        const res = await fetch(SHEET_URL);
+        const res = await fetch(CSV_URL);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
         const text = await res.text();
-        // Google devuelve JSONP, hay que limpiar el wrapper
-        const json = JSON.parse(text.replace(/^.*?(\{.*\}).*?$/s, '$1'));
-        const rows = json.table.rows;
-        const cols = json.table.cols.map(c => c.label.trim().toUpperCase());
-
-        const idx = {
-          cat:     cols.indexOf('CATEGORIA'),
-          name:    cols.indexOf('PRODUCTO'),
-          brand:   cols.indexOf('MARCA'),
-          present: cols.indexOf('PRESENTACION'),
-          foto:    cols.indexOf('FOTO_URL'),
-          mayor:   cols.indexOf('PRECIO_MAYOR'),
-          menor:   cols.indexOf('PRECIO_MENOR'),
-          estado:  cols.indexOf('ESTADO'),
-        };
-
-        const products = rows.map(r => ({
-          cat:     r.c[idx.cat]?.v || '',
-          name:    r.c[idx.name]?.v || '',
-          brand:   r.c[idx.brand]?.v || '',
-          present: r.c[idx.present]?.v || '',
-          foto:    r.c[idx.foto]?.v || '',
-          mayor:   r.c[idx.mayor]?.v || '',
-          menor:   r.c[idx.menor]?.v || '',
-          estado:  r.c[idx.estado]?.v || 'ACTIVO',
-        })).filter(p => p.name);
-
+        const products = parseCSV(text).map(r => ({
+          cat:     r['CATEGORIA'] || '',
+          name:    r['PRODUCTO'] || '',
+          brand:   r['MARCA'] || '',
+          present: r['PRESENTACION'] || '',
+          foto:    r['FOTO_URL'] || '',
+          mayor:   r['PRECIO_MAYOR'] || '',
+          menor:   r['PRECIO_MENOR'] || '',
+          estado:  r['ESTADO'] || 'ACTIVO',
+        }));
         renderCatalog(products);
       } catch(e) {
         document.getElementById('main').innerHTML = `

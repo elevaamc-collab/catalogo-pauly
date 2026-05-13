@@ -10,7 +10,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: #0a0a1a;
+      background: #111827;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -28,16 +28,16 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.5);
+      box-shadow: 0 3px 16px rgba(0,0,0,0.5);
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 200;
     }
 
     .header-left { display: flex; align-items: center; gap: 10px; }
 
     .logo-wrap {
-      width: 46px; height: 46px;
+      width: 48px; height: 48px;
       background: white; border-radius: 50%;
       border: 3px solid #4CAF50;
       display: flex; align-items: center; justify-content: center;
@@ -48,182 +48,180 @@
     .brand-name { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: white; letter-spacing: 3px; line-height: 1; }
     .brand-sub { font-size: 9px; color: #90CAF9; letter-spacing: 2px; text-transform: uppercase; font-weight: 800; }
 
+    .header-right { text-align: right; }
     .validity-pill {
       background: #4CAF50; color: white;
       font-family: 'Bebas Neue', sans-serif; font-size: 12px;
       padding: 3px 10px; border-radius: 20px; letter-spacing: 1px;
-      text-align: right;
     }
-    .tagline { font-size: 9px; color: #FFF176; font-weight: 800; text-align: right; margin-top: 2px; }
+    .tagline { font-size: 9px; color: #FFF176; font-weight: 800; margin-top: 2px; }
 
-    /* ── INSTRUCCION ── */
+    /* ── HINT ── */
     .hint {
-      color: rgba(255,255,255,0.5);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 0.5rem;
-      text-align: center;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      font-size: 10px; font-weight: 800;
+      padding: 0.4rem; text-align: center;
+      letter-spacing: 2px; text-transform: uppercase;
+      width: 100%;
     }
 
-    /* ── FLIPBOOK CONTAINER ── */
-    .flipbook-wrap {
-      width: 100%;
-      max-width: 420px;
+    /* ── FLIPBOOK WRAPPER ── */
+    .flipbook-outer {
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
+      width: 100%;
       padding: 0.5rem 0;
-      position: relative;
     }
 
     #flipbook { background: transparent; }
 
-    /* ── PÁGINAS ── */
+    /* ── PÁGINAS — estructura base ── */
     .page {
-      background: white;
       overflow: hidden;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #5b7fa6; /* fallback si no hay imagen */
+    }
+
+    /* ── PORTADA ── */
+    .page-cover-front {
+      background: linear-gradient(160deg, #1565C0 0%, #0D47A1 50%, #1B5E20 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1rem; padding: 2rem;
+      text-align: center;
+    }
+    .cover-deco {
+      position: absolute; border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      pointer-events: none;
+    }
+    .cover-logo {
+      width: 90px; height: 90px;
+      background: white; border-radius: 50%;
+      border: 5px solid #4CAF50;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; z-index: 1;
+    }
+    .cover-logo img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
+    .cover-title { font-family: 'Bebas Neue', sans-serif; font-size: 52px; color: white; letter-spacing: 5px; line-height: 1; z-index: 1; }
+    .cover-sub { font-size: 11px; color: #90CAF9; letter-spacing: 3px; text-transform: uppercase; font-weight: 800; z-index: 1; }
+    .cover-badge {
+      background: #4CAF50; color: white;
+      font-family: 'Bebas Neue', sans-serif; font-size: 15px;
+      padding: 5px 18px; border-radius: 20px; letter-spacing: 1px; z-index: 1;
+    }
+    .cover-tagline { color: #FFF176; font-size: 14px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; z-index: 1; }
+
+    /* ── HEADER DE CATEGORÍA ── */
+    .cat-header {
+      display: flex; align-items: center; gap: 8px;
+      padding: 0.5rem 0.75rem;
+      position: relative; z-index: 2;
+    }
+    .cat-header-icon { font-size: 20px; }
+    .cat-header-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px; color: white;
+      letter-spacing: 3px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    /* ── GRILLA DE PRODUCTOS ── */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: rgba(0,0,0,0.12);
+      position: relative; z-index: 2;
+    }
+
+    /* ── TARJETA DE PRODUCTO ── */
+    .product-card {
+      background: rgba(255,255,255,0.96);
+      display: flex; flex-direction: column;
       position: relative;
     }
 
-    /* Portada */
-    .page-cover {
-      background: linear-gradient(145deg, #1565C0 0%, #0D47A1 60%, #1B5E20 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      padding: 1.5rem;
-    }
-
-    .cover-logo {
-      width: 80px; height: 80px;
-      background: white; border-radius: 50%;
-      border: 4px solid #4CAF50;
+    .prod-img {
+      width: 100%; aspect-ratio: 1;
       display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
+      overflow: hidden; background: white;
     }
-    .cover-logo img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
-    .cover-title { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: white; letter-spacing: 4px; text-align: center; line-height: 1; }
-    .cover-sub { font-size: 10px; color: #90CAF9; letter-spacing: 3px; text-transform: uppercase; font-weight: 800; }
-    .cover-badge {
-      background: #4CAF50; color: white;
-      font-family: 'Bebas Neue', sans-serif; font-size: 14px;
-      padding: 5px 16px; border-radius: 20px; letter-spacing: 1px;
-    }
-    .cover-tagline { color: #FFF176; font-size: 13px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
-    .cover-deco {
-      position: absolute;
-      width: 120px; height: 120px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.05);
-    }
-    .cover-deco-1 { top: -30px; right: -30px; }
-    .cover-deco-2 { bottom: -40px; left: -40px; width: 150px; height: 150px; }
+    .prod-img img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
+    .prod-img .no-img { font-size: 40px; }
 
-    /* Página de categoría - header */
-    .page-cat-header {
-      padding: 0.5rem 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .page-cat-icon { font-size: 18px; }
-    .page-cat-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 22px; color: white; letter-spacing: 2px;
-    }
+    .prod-info { padding: 0.3rem 0.4rem 0; flex: 1; }
+    .prod-name { font-size: 10px; font-weight: 900; color: #111; text-transform: uppercase; line-height: 1.2; }
+    .prod-brand { font-size: 9px; color: #aaa; font-weight: 700; margin-top: 1px; }
+    .prod-present { font-size: 8px; color: #ccc; }
 
-    /* Grid de productos dentro de la página */
-    .page-products {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
-      background: rgba(0,0,0,0.1);
-      flex: 1;
-    }
-
-    .page-product {
-      background: white;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .pp-img {
-      width: 100%;
-      aspect-ratio: 1;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-      font-size: 36px;
-    }
-    .pp-img img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
-
-    .pp-info { padding: 0.3rem 0.4rem 0; flex: 1; }
-    .pp-name { font-size: 9px; font-weight: 900; color: #111; text-transform: uppercase; line-height: 1.2; }
-    .pp-brand { font-size: 8px; color: #bbb; font-weight: 700; }
-    .pp-present { font-size: 7px; color: #ccc; }
-
-    .pp-prices { display: flex; flex-direction: column; margin-top: 0.25rem; }
-    .pp-price {
+    .prod-prices { display: flex; flex-direction: column; margin-top: 0.25rem; }
+    .prod-price {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 0.25rem 0.4rem;
+      padding: 0.28rem 0.4rem;
     }
-    .pp-price.mayor { background: #1565C0; }
-    .pp-price.menor { background: #2E7D32; }
-    .pp-lbl { font-size: 7px; color: rgba(255,255,255,0.75); font-weight: 900; text-transform: uppercase; }
-    .pp-val { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: white; line-height: 1; }
+    .prod-price.mayor { background: #1565C0; }
+    .prod-price.menor { background: #2E7D32; }
+    .prod-lbl { font-size: 7px; color: rgba(255,255,255,0.8); font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
+    .prod-val { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: white; line-height: 1; }
 
+    /* SIN STOCK */
     .sin-stock-ov {
       position: absolute; inset: 0;
-      background: rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.87);
       display: flex; align-items: center; justify-content: center;
     }
     .sin-stock-badge {
       background: #E53935; color: white;
       font-family: 'Bebas Neue', sans-serif; font-size: 14px;
-      padding: 4px 10px; border-radius: 4px; letter-spacing: 2px;
-      transform: rotate(-12deg);
+      padding: 4px 12px; border-radius: 4px; letter-spacing: 2px;
+      transform: rotate(-12deg); box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
 
-    /* Contraportada */
-    .page-back {
-      background: linear-gradient(145deg, #0D47A1, #1B5E20);
+    /* PIE DE PÁGINA */
+    .page-footer-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.25rem 0.75rem;
+      position: relative; z-index: 2;
+    }
+    .page-footer-cat { font-family: 'Bebas Neue', sans-serif; font-size: 11px; color: white; letter-spacing: 1px; opacity: 0.8; }
+    .page-footer-num { font-family: 'Bebas Neue', sans-serif; font-size: 11px; color: white; opacity: 0.8; }
+
+    /* ── CONTRAPORTADA ── */
+    .page-cover-back {
+      background: linear-gradient(160deg, #0D47A1, #1B5E20);
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      gap: 0.75rem; padding: 1.5rem; text-align: center;
+      gap: 0.75rem; padding: 2rem; text-align: center;
     }
-    .back-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: white; letter-spacing: 3px; }
-    .back-info { color: #90CAF9; font-size: 11px; font-weight: 700; line-height: 2; }
+    .back-title { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: white; letter-spacing: 3px; }
+    .back-info { color: #90CAF9; font-size: 12px; font-weight: 700; line-height: 2.2; }
     .back-info span { color: white; }
-    .back-tagline { color: #FFF176; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; }
+    .back-tagline { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: #FFF176; letter-spacing: 2px; }
+    .back-hash { color: rgba(255,255,255,0.25); font-size: 10px; font-weight: 700; }
 
     /* ── CONTROLES ── */
     .controls {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.75rem;
-      justify-content: center;
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.75rem; justify-content: center; width: 100%;
     }
-
     .ctrl-btn {
-      background: #1565C0; color: white;
-      border: none; padding: 0.6rem 1.4rem;
-      border-radius: 20px; font-family: 'Nunito', sans-serif;
-      font-size: 13px; font-weight: 800; cursor: pointer;
-      transition: background 0.2s; letter-spacing: 0.5px;
+      background: #1565C0; color: white; border: none;
+      padding: 0.6rem 1.4rem; border-radius: 20px;
+      font-family: 'Nunito', sans-serif; font-size: 13px;
+      font-weight: 800; cursor: pointer; transition: background 0.2s;
     }
     .ctrl-btn:hover { background: #0D47A1; }
-    .ctrl-btn:disabled { background: #333; color: #666; cursor: default; }
-
-    .page-indicator { color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 800; min-width: 60px; text-align: center; }
+    .ctrl-btn:disabled { background: #2a2a3a; color: #555; cursor: default; }
+    .page-indicator { color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 800; min-width: 60px; text-align: center; }
 
     /* ── LOADING ── */
     .loading-screen {
-      position: fixed; inset: 0;
-      background: #0a0a1a;
+      position: fixed; inset: 0; background: #111827;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       gap: 1rem; z-index: 999;
@@ -233,80 +231,84 @@
       width: 40px; height: 40px;
       border: 3px solid rgba(255,255,255,0.1);
       border-top-color: #4CAF50;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+      border-radius: 50%; animation: spin 0.8s linear infinite;
     }
-    .loading-text { color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+    .loading-text { color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
 
-  <!-- LOADING -->
   <div class="loading-screen" id="loadingScreen">
     <div class="spinner"></div>
     <div class="loading-text">Cargando catálogo...</div>
   </div>
 
-  <!-- HEADER -->
   <header class="site-header">
     <div class="header-left">
       <div class="logo-wrap">
-        <img src="logo_pauly.png" alt="Pauly" onerror="this.parentElement.innerHTML='<span style=\'font-family:Bebas Neue,sans-serif;font-size:16px;color:#1565C0;font-weight:900\'>P</span>'">
+        <img src="logo_pauly.png" alt="Pauly"
+          onerror="this.parentElement.innerHTML='<span style=\'font-family:Bebas Neue,sans-serif;font-size:18px;color:#1565C0;font-weight:900\'>P</span>'">
       </div>
       <div>
         <div class="brand-name">PAULY</div>
         <div class="brand-sub">Distribuidora · La Rioja</div>
       </div>
     </div>
-    <div>
+    <div class="header-right">
       <div class="validity-pill" id="validityText">Junio 2026</div>
       <div class="tagline">¡Ahorrá a lo grande! 💛</div>
     </div>
   </header>
 
-  <div class="hint">← Deslizá para pasar la hoja →</div>
+  <div class="hint">← Tocá el borde de la hoja para pasar →</div>
 
-  <!-- FLIPBOOK -->
-  <div class="flipbook-wrap">
+  <div class="flipbook-outer">
     <div id="flipbook"></div>
   </div>
 
-  <!-- CONTROLES -->
   <div class="controls">
-    <button class="ctrl-btn" id="prevBtn" onclick="flipPrev()">◀ Anterior</button>
-    <span class="page-indicator" id="pageInd">1 / 1</span>
+    <button class="ctrl-btn" id="prevBtn" onclick="flipPrev()" disabled>◀ Anterior</button>
+    <span class="page-indicator" id="pageInd">– / –</span>
     <button class="ctrl-btn" id="nextBtn" onclick="flipNext()">Siguiente ▶</button>
   </div>
 
   <script>
-    // ══════════════════════════════════════════
-    // CONFIGURACIÓN
-    // ══════════════════════════════════════════
+    // ══════════════════════════════════════════════════════
+    // CONFIGURACIÓN — editá solo esta sección
+    // ══════════════════════════════════════════════════════
     const CONFIG = {
       VALIDITY: "Del 1 al 30 de Junio 2026",
+
       CSV_URL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSJKVRqEYxtXM41ac6RuyS3aXo2mjSI_5mLl8l8jS6i-PGzNe8cQyXzBIVV7WYD8BapahEaFX-SyaoQ/pub?gid=0&single=true&output=csv",
+
+      // Base URL donde están los fondos en GitHub
+      FONDOS_BASE: "https://elevaamc-collab.github.io/catalogo-pauly/",
+
+      // Mapa de categorías: fondo, color del header y emoji
+      // Si no hay fondo, usá null y pondrá un color sólido
+      CATEGORIES: {
+        "Fiambres":   { fondo: "FONDO_FIAMBRES.jpg",  headerColor: "#B71C1C", icon: "🥩" },
+        "Quesos":     { fondo: null,                   headerColor: "#E65100", icon: "🧀" },
+        "Congelados": { fondo: null,                   headerColor: "#0277BD", icon: "❄️" },
+        "Galletas":   { fondo: null,                   headerColor: "#6A1B9A", icon: "🍪" },
+        "Lácteos":    { fondo: "FONDO_LACTEOS.jpg",    headerColor: "#2E7D32", icon: "🥛" },
+        "Limpieza":   { fondo: null,                   headerColor: "#00695C", icon: "🧹" },
+        "Enlatados":  { fondo: null,                   headerColor: "#4E342E", icon: "🥫" },
+        "Bebidas":    { fondo: null,                   headerColor: "#F57F17", icon: "🧃" },
+      },
+
       PRODUCTS_PER_PAGE: 4,
-      CATEGORY_META: {
-        "Fiambres":   { icon: "🥩", color: "#B71C1C", bg: "#FFEBEE" },
-        "Quesos":     { icon: "🧀", color: "#E65100", bg: "#FFF3E0" },
-        "Congelados": { icon: "❄️", color: "#0277BD", bg: "#E1F5FE" },
-        "Galletas":   { icon: "🍪", color: "#6A1B9A", bg: "#F3E5F5" },
-        "Lácteos":    { icon: "🥛", color: "#2E7D32", bg: "#E8F5E9" },
-        "Limpieza":   { icon: "🧹", color: "#00695C", bg: "#E0F2F1" },
-        "Enlatados":  { icon: "🥫", color: "#4E342E", bg: "#EFEBE9" },
-        "Bebidas":    { icon: "🧃", color: "#F57F17", bg: "#FFFDE7" },
-      }
     };
 
+    // ══════════════════════════════════════════════════════
+    // LÓGICA
+    // ══════════════════════════════════════════════════════
     document.getElementById('validityText').textContent = CONFIG.VALIDITY;
 
     let pageFlip = null;
     let totalPages = 0;
 
-    // ══════════════════════════════════════════
-    // CSV PARSER
-    // ══════════════════════════════════════════
     function parseCSV(text) {
       const lines = text.trim().split('\n');
       const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, '').toUpperCase());
@@ -332,90 +334,106 @@
       return '$' + Math.round(num).toLocaleString('es-AR');
     }
 
-    // ══════════════════════════════════════════
-    // CONSTRUIR PÁGINAS
-    // ══════════════════════════════════════════
+    function getPageSize() {
+      // Proporción A4: 1:1.414
+      const maxW = Math.min(window.innerWidth - 8, 440);
+      return { w: maxW, h: Math.round(maxW * 1.414) };
+    }
+
     function buildPages(products) {
       const container = document.getElementById('flipbook');
       container.innerHTML = '';
+      const { w, h } = getPageSize();
+      const pages = [];
 
-      // Calcular tamaño de página según pantalla
-      const maxW = Math.min(window.innerWidth - 16, 420);
-      const pageW = maxW;
-      const pageH = Math.round(pageW * 1.35);
-
-      // Agrupar por categoría
+      // Agrupar por categoría manteniendo orden
       const cats = {};
       products.forEach(p => {
-        if (!cats[p.cat]) cats[p.cat] = [];
-        cats[p.cat].push(p);
+        if (p.cat && !cats[p.cat]) cats[p.cat] = [];
+        if (p.cat) cats[p.cat].push(p);
       });
-
-      const pages = [];
 
       // PORTADA
       const cover = document.createElement('div');
-      cover.className = 'page page-cover';
-      cover.style.cssText = `width:${pageW}px;height:${pageH}px`;
+      cover.className = 'page';
       cover.setAttribute('data-density', 'hard');
+      cover.style.cssText = `width:${w}px;height:${h}px`;
       cover.innerHTML = `
-        <div class="cover-deco cover-deco-1"></div>
-        <div class="cover-deco cover-deco-2"></div>
-        <div class="cover-logo">
-          <img src="logo_pauly.png" alt="Pauly" onerror="this.parentElement.innerHTML='<span style=\'font-family:Bebas Neue,sans-serif;font-size:22px;color:#1565C0;font-weight:900\'>P</span>'">
+        <div class="page-cover-front" style="width:${w}px;height:${h}px">
+          <div class="cover-deco" style="width:180px;height:180px;top:-50px;right:-50px"></div>
+          <div class="cover-deco" style="width:220px;height:220px;bottom:-70px;left:-70px"></div>
+          <div class="cover-logo">
+            <img src="logo_pauly.png" alt="Pauly"
+              onerror="this.parentElement.innerHTML='<span style=\'font-family:Bebas Neue,sans-serif;font-size:24px;color:#1565C0;font-weight:900\'>P</span>'">
+          </div>
+          <div class="cover-title">PAULY</div>
+          <div class="cover-sub">Distribuidora · La Rioja</div>
+          <div class="cover-badge">${CONFIG.VALIDITY}</div>
+          <div class="cover-tagline">¡Ahorrá a lo grande! 💛</div>
         </div>
-        <div class="cover-title">PAULY</div>
-        <div class="cover-sub">Distribuidora · La Rioja</div>
-        <div class="cover-badge">${CONFIG.VALIDITY}</div>
-        <div class="cover-tagline">¡Ahorrá a lo grande! 💛</div>
       `;
       pages.push(cover);
 
       // PÁGINAS DE PRODUCTOS
+      let pageNum = 1;
       Object.entries(cats).forEach(([catName, items]) => {
-        const meta = CONFIG.CATEGORY_META[catName] || { icon: '📦', color: '#546E7A', bg: '#ECEFF1' };
+        const meta = CONFIG.CATEGORIES[catName] || { fondo: null, headerColor: '#546E7A', icon: '📦' };
+        const fondoURL = meta.fondo ? `${CONFIG.FONDOS_BASE}${meta.fondo}` : null;
+        const headerBg = meta.headerColor + 'DD'; // con transparencia
 
-        // Dividir en grupos de 4
         for (let i = 0; i < items.length; i += CONFIG.PRODUCTS_PER_PAGE) {
           const chunk = items.slice(i, i + CONFIG.PRODUCTS_PER_PAGE);
           const page = document.createElement('div');
           page.className = 'page';
-          page.style.cssText = `width:${pageW}px;height:${pageH}px;display:flex;flex-direction:column;background:${meta.bg}`;
+          page.style.cssText = `width:${w}px;height:${h}px;display:flex;flex-direction:column;background-color:${meta.headerColor}22`;
 
+          if (fondoURL) {
+            page.style.backgroundImage = `url('${fondoURL}')`;
+            page.style.backgroundSize = 'cover';
+            page.style.backgroundPosition = 'center';
+          }
+
+          // Overlay semitransparente para que los productos se lean bien
+          const overlay = document.createElement('div');
+          overlay.style.cssText = `position:absolute;inset:0;background:rgba(0,0,0,0.08);z-index:1`;
+          page.appendChild(overlay);
+
+          // Header categoría
           const hdr = document.createElement('div');
-          hdr.className = 'page-cat-header';
-          hdr.style.background = meta.color;
-          hdr.innerHTML = `<span class="page-cat-icon">${meta.icon}</span><span class="page-cat-name">${catName.toUpperCase()}</span>`;
+          hdr.className = 'cat-header';
+          hdr.style.background = headerBg;
+          hdr.innerHTML = `<span class="cat-header-icon">${meta.icon}</span><span class="cat-header-name">${catName.toUpperCase()}</span>`;
           page.appendChild(hdr);
 
+          // Grid productos
           const grid = document.createElement('div');
-          grid.className = 'page-products';
+          grid.className = 'products-grid';
           grid.style.flex = '1';
 
           chunk.forEach(p => {
             const card = document.createElement('div');
-            card.className = 'page-product';
+            card.className = 'product-card';
             card.style.position = 'relative';
 
             const imgHTML = p.foto
-              ? `<img src="${p.foto}" alt="${p.name}" onerror="this.style.display='none';this.parentElement.innerHTML='<span>${meta.icon}</span>'">`
-              : `<span>${meta.icon}</span>`;
+              ? `<img src="${p.foto}" alt="${p.name}" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\\'no-img\\'>${meta.icon}</span>'">`
+              : `<span class="no-img">${meta.icon}</span>`;
 
             card.innerHTML = `
-              <div class="pp-img" style="background:white">${imgHTML}</div>
-              <div class="pp-info">
-                <div class="pp-name">${p.name}</div>
-                <div class="pp-brand">${p.brand}</div>
-                ${p.present ? `<div class="pp-present">${p.present}</div>` : ''}
+              <div class="prod-img">${imgHTML}</div>
+              <div class="prod-info">
+                <div class="prod-name">${p.name}</div>
+                <div class="prod-brand">${p.brand}</div>
+                ${p.present ? `<div class="prod-present">${p.present}</div>` : ''}
               </div>
-              <div class="pp-prices">
-                <div class="pp-price mayor">
-                  <span class="pp-lbl">Mayor</span>
-                  <span class="pp-val">${formatPrice(p.mayor)}</span>
+              <div class="prod-prices">
+                <div class="prod-price mayor">
+                  <span class="prod-lbl">Mayor</span>
+                  <span class="prod-val">${formatPrice(p.mayor)}</span>
                 </div>
-                <div class="pp-price menor">
-                  <span class="pp-lbl">Menor</span>
-                  <span class="pp-val">${formatPrice(p.menor)}</span>
+                <div class="prod-price menor">
+                  <span class="prod-lbl">Menor</span>
+                  <span class="prod-val">${formatPrice(p.menor)}</span>
                 </div>
               </div>
               ${p.estado === 'SIN STOCK' ? '<div class="sin-stock-ov"><div class="sin-stock-badge">SIN STOCK</div></div>' : ''}
@@ -425,83 +443,74 @@
 
           page.appendChild(grid);
 
-          // Número de página
-          const pageNum = document.createElement('div');
-          pageNum.style.cssText = `background:${meta.color};color:white;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:13px;padding:3px;letter-spacing:1px`;
-          pageNum.textContent = catName;
-          page.appendChild(pageNum);
+          // Footer
+          const footer = document.createElement('div');
+          footer.className = 'page-footer-bar';
+          footer.style.background = headerBg;
+          footer.innerHTML = `<span class="page-footer-cat">${catName}</span><span class="page-footer-num">${pageNum}</span>`;
+          page.appendChild(footer);
 
           pages.push(page);
+          pageNum++;
         }
       });
 
       // CONTRAPORTADA
       const back = document.createElement('div');
-      back.className = 'page page-back';
-      back.style.cssText = `width:${pageW}px;height:${pageH}px`;
+      back.className = 'page';
       back.setAttribute('data-density', 'hard');
+      back.style.cssText = `width:${w}px;height:${h}px`;
       back.innerHTML = `
-        <div class="back-title">PAULY DISTRIBUIDORA</div>
-        <div class="back-info">
-          <div>📲 <span>WhatsApp</span> · Consultas y pedidos</div>
-          <div>📍 <span>La Rioja Capital</span></div>
-          <div>🕘 <span>Lun-Vie</span> 9-13 / 18-21</div>
-          <div>🕘 <span>Sábados</span> 9-13 hs</div>
+        <div class="page-cover-back" style="width:${w}px;height:${h}px">
+          <div class="back-title">PAULY DISTRIBUIDORA</div>
+          <div class="back-info">
+            <div>📲 <span>WhatsApp</span> · Consultas y pedidos</div>
+            <div>📍 <span>La Rioja Capital</span></div>
+            <div>🕘 <span>Lun-Vie</span> 9-13 / 18-21 hs</div>
+            <div>🕘 <span>Sábados</span> 9-13 hs</div>
+          </div>
+          <div class="back-tagline">¡Ahorrá a lo grande! 💛</div>
+          <div class="back-hash">#ahorro #mayorista #paulydistribuidora</div>
         </div>
-        <div class="back-tagline">¡Ahorrá a lo grande! 💛</div>
-        <div style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:700">#ahorro #mayorista #paulydistribuidora</div>
       `;
       pages.push(back);
 
-      // Agregar todas las páginas al flipbook
       pages.forEach(p => container.appendChild(p));
       totalPages = pages.length;
 
-      return { pageW, pageH };
+      return { w, h };
     }
 
-    // ══════════════════════════════════════════
-    // INICIALIZAR FLIPBOOK
-    // ══════════════════════════════════════════
-    function initFlipbook(pageW, pageH) {
+    function initFlipbook(w, h) {
       pageFlip = new St.PageFlip(document.getElementById('flipbook'), {
-        width: pageW,
-        height: pageH,
+        width: w,
+        height: h,
         size: 'fixed',
-        minWidth: pageW,
-        maxWidth: pageW,
-        minHeight: pageH,
-        maxHeight: pageH,
         showCover: true,
         mobileScrollSupport: false,
         clickEventForward: true,
         usePortrait: true,
         startPage: 0,
         drawShadow: true,
-        flippingTime: 600,
+        flippingTime: 700,
+        maxShadowOpacity: 0.5,
       });
 
       pageFlip.loadFromHTML(document.querySelectorAll('#flipbook .page'));
 
-      pageFlip.on('flip', (e) => {
-        updateControls(e.data);
-      });
-
+      pageFlip.on('flip', e => updateControls(e.data));
       updateControls(0);
     }
 
-    function updateControls(currentPage) {
-      document.getElementById('prevBtn').disabled = currentPage === 0;
-      document.getElementById('nextBtn').disabled = currentPage >= totalPages - 1;
-      document.getElementById('pageInd').textContent = `${currentPage + 1} / ${totalPages}`;
+    function updateControls(cur) {
+      document.getElementById('prevBtn').disabled = cur === 0;
+      document.getElementById('nextBtn').disabled = cur >= totalPages - 1;
+      document.getElementById('pageInd').textContent = `${cur + 1} / ${totalPages}`;
     }
 
     function flipPrev() { if (pageFlip) pageFlip.flipPrev('top'); }
     function flipNext() { if (pageFlip) pageFlip.flipNext('top'); }
 
-    // ══════════════════════════════════════════
-    // CARGAR DATOS Y ARRANCAR
-    // ══════════════════════════════════════════
     async function init() {
       try {
         const res = await fetch(CONFIG.CSV_URL);
@@ -518,18 +527,17 @@
           estado:  r['ESTADO'] || 'ACTIVO',
         }));
 
-        const { pageW, pageH } = buildPages(products);
-
+        const { w, h } = buildPages(products);
         setTimeout(() => {
-          initFlipbook(pageW, pageH);
+          initFlipbook(w, h);
           document.getElementById('loadingScreen').classList.add('hidden');
-        }, 300);
+        }, 400);
 
       } catch(e) {
         document.getElementById('loadingScreen').innerHTML = `
           <div style="color:#ef5350;font-size:14px;font-weight:800;text-align:center;padding:2rem">
             ⚠️ No se pudo cargar el catálogo.<br>
-            <small style="color:#666;font-size:11px">Verificá la conexión al Google Sheet.</small>
+            <small style="color:#555;font-size:11px">Verificá la conexión al Google Sheet.</small>
           </div>`;
       }
     }

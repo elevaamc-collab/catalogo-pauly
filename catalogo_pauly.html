@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Catálogo Pauly Distribuidora</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #ECEFF1;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: #1565C0;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-circle {
+      width: 48px;
+      height: 48px;
+      background: white;
+      border-radius: 50%;
+      border: 3px solid #4CAF50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .logo-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 4px;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: white;
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+
+    .logo-sub {
+      font-size: 9px;
+      color: #90CAF9;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .header-validity {
+      text-align: right;
+    }
+
+    .validity-label {
+      font-size: 9px;
+      color: #90CAF9;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    .validity-dates {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      color: #FFF176;
+      letter-spacing: 1px;
+    }
+
+    /* ── CATEGORÍA NAV ── */
+    .cat-nav {
+      background: white;
+      padding: 0.6rem 0.75rem;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      border-bottom: 2px solid #E0E0E0;
+      position: sticky;
+      top: 70px;
+      z-index: 99;
+    }
+
+    .cat-nav::-webkit-scrollbar { height: 3px; }
+    .cat-nav::-webkit-scrollbar-thumb { background: #1565C0; border-radius: 2px; }
+
+    .cat-pill {
+      flex-shrink: 0;
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1.5px solid #1565C0;
+      color: #1565C0;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      background: white;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .cat-pill.active,
+    .cat-pill:hover {
+      color: white;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ── CATEGORÍA HEADER ── */
+    .cat-section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+
+    .cat-section-icon { font-size: 20px; }
+
+    .cat-section-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: white;
+      letter-spacing: 2px;
+    }
+
+    /* ── GRILLA DE PRODUCTOS ── */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+    }
+
+    /* ── TARJETA DE PRODUCTO ── */
+    .product-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .product-img-wrap {
+      width: 100%;
+      aspect-ratio: 1;
+      background: #F5F5F5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .product-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 8px;
+    }
+
+    .product-img-wrap .no-img {
+      font-size: 48px;
+    }
+
+    .product-body {
+      padding: 0.5rem 0.6rem 0;
+    }
+
+    .product-name {
+      font-size: 11px;
+      font-weight: 900;
+      color: #1A1A1A;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .product-brand {
+      font-size: 10px;
+      color: #999;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .product-present {
+      font-size: 9px;
+      color: #bbb;
+      font-weight: 600;
+    }
+
+    /* ── PRECIOS ── */
+    .prices-row {
+      display: flex;
+      margin-top: 0.4rem;
+    }
+
+    .price-box {
+      flex: 1;
+      padding: 0.35rem 0.4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .price-box.mayor { background: #1565C0; }
+    .price-box.menor { background: #2E7D32; }
+
+    .price-lbl {
+      font-size: 7px;
+      color: rgba(255,255,255,0.8);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .price-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      color: white;
+      line-height: 1;
+    }
+
+    .price-divider-v {
+      width: 1px;
+      background: rgba(255,255,255,0.3);
+    }
+
+    /* ── SIN STOCK ── */
+    .sin-stock-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+    }
+
+    .sin-stock-badge {
+      background: #E53935;
+      color: white;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      padding: 4px 12px;
+      border-radius: 4px;
+      letter-spacing: 2px;
+      transform: rotate(-12deg);
+    }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      background: #1565C0;
+      margin: 0 0.75rem 1.5rem;
+      border-radius: 10px;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-info {
+      color: #90CAF9;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1.8;
+    }
+
+    .footer-info span { color: white; }
+
+    .footer-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      color: #FFF176;
+      letter-spacing: 3px;
+      text-align: right;
+    }
+
+    .footer-tagline {
+      font-size: 9px;
+      color: #4CAF50;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: right;
+    }
+
+    /* ── LOADING / ERROR ── */
+    .status-msg {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #888;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .status-msg .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #E0E0E0;
+      border-top-color: #1565C0;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-logo">
+      <div class="logo-circle">
+        <!-- Reemplazá src con la URL del logo real de Pauly -->
+        <img src="logo_pauly.png" alt="Pauly" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-family:Bebas Neue,sans-serif;font-size:14px;color:#1565C0\'>P</span>'">
+      </div>
+      <div class="logo-text">
+        <span class="logo-name">PAULY</span>
+        <span class="logo-sub">Distribuidora · La Rioja</span>
+      </div>
+    </div>
+    <div class="header-validity">
+      <div class="validity-label">Vigencia</div>
+      <div class="validity-dates" id="validityDates">Cargando...</div>
+    </div>
+  </header>
+
+  <!-- NAVEGACIÓN POR CATEGORÍA -->
+  <nav class="cat-nav" id="catNav"></nav>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main" id="main">
+    <div class="status-msg">
+      <div class="spinner"></div>
+      Cargando catálogo...
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-info">
+      <div>📲 <span>WhatsApp</span> · Consultas y pedidos</div>
+      <div>📍 <span>La Rioja Capital</span></div>
+      <div>🕘 <span>Lun-Vie</span> 9-13 / 18-21 · <span>Sáb</span> 9-13</div>
+      <div>#ahorro #mayorista #paulydistribuidora</div>
+    </div>
+    <div>
+      <div class="footer-brand">PAULY</div>
+      <div class="footer-tagline">Ahorrá a lo grande 💛</div>
+    </div>
+  </footer>
+
+  <script>
+    // ══════════════════════════════════════════════════════
+    // CONFIGURACIÓN — EDITÁ SOLO ESTA SECCIÓN
+    // ══════════════════════════════════════════════════════
+
+    const CONFIG = {
+      // 1. Pegá acá el ID de tu Google Sheet (está en la URL del Sheet)
+      //    Ejemplo: https://docs.google.com/spreadsheets/d/ [ESTE_ES_EL_ID] /edit
+      SHEET_ID: "TU_SHEET_ID_AQUI",
+
+      // 2. Nombre exacto de la hoja dentro del Sheet (la pestaña)
+      SHEET_NAME: "Catalogo",
+
+      // 3. Fechas de vigencia que aparecen en el header
+      VALIDITY: "Del 1 al 30 de Junio 2026",
+
+      // 4. Emoji por categoría (si querés cambiarlos)
+      CATEGORY_ICONS: {
+        "Fiambres":   { icon: "🥩", color: "#C62828", bg: "#FFEBEE" },
+        "Quesos":     { icon: "🧀", color: "#E65100", bg: "#FFF3E0" },
+        "Congelados": { icon: "❄️", color: "#0277BD", bg: "#E1F5FE" },
+        "Galletas":   { icon: "🍪", color: "#6A1B9A", bg: "#F3E5F5" },
+        "Lácteos":    { icon: "🥛", color: "#2E7D32", bg: "#E8F5E9" },
+        "Limpieza":   { icon: "🧹", color: "#00695C", bg: "#E0F2F1" },
+        "Enlatados":  { icon: "🥫", color: "#4E342E", bg: "#EFEBE9" },
+        "Bebidas":    { icon: "🧃", color: "#F57F17", bg: "#FFFDE7" },
+      }
+    };
+
+    // ══════════════════════════════════════════════════════
+    // LÓGICA — NO MODIFICAR
+    // ══════════════════════════════════════════════════════
+
+    document.getElementById('validityDates').textContent = CONFIG.VALIDITY;
+
+    // URL pública del Sheet en formato JSON (el Sheet debe estar publicado)
+    const SHEET_URL = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(CONFIG.SHEET_NAME)}`;
+
+    async function loadCatalog() {
+      try {
+        const res = await fetch(SHEET_URL);
+        const text = await res.text();
+        // Google devuelve JSONP, hay que limpiar el wrapper
+        const json = JSON.parse(text.replace(/^.*?(\{.*\}).*?$/s, '$1'));
+        const rows = json.table.rows;
+        const cols = json.table.cols.map(c => c.label.trim().toUpperCase());
+
+        const idx = {
+          cat:     cols.indexOf('CATEGORIA'),
+          name:    cols.indexOf('PRODUCTO'),
+          brand:   cols.indexOf('MARCA'),
+          present: cols.indexOf('PRESENTACION'),
+          foto:    cols.indexOf('FOTO_URL'),
+          mayor:   cols.indexOf('PRECIO_MAYOR'),
+          menor:   cols.indexOf('PRECIO_MENOR'),
+          estado:  cols.indexOf('ESTADO'),
+        };
+
+        const products = rows.map(r => ({
+          cat:     r.c[idx.cat]?.v || '',
+          name:    r.c[idx.name]?.v || '',
+          brand:   r.c[idx.brand]?.v || '',
+          present: r.c[idx.present]?.v || '',
+          foto:    r.c[idx.foto]?.v || '',
+          mayor:   r.c[idx.mayor]?.v || '',
+          menor:   r.c[idx.menor]?.v || '',
+          estado:  r.c[idx.estado]?.v || 'ACTIVO',
+        })).filter(p => p.name);
+
+        renderCatalog(products);
+      } catch(e) {
+        document.getElementById('main').innerHTML = `
+          <div class="status-msg">
+            ⚠️ No se pudo cargar el catálogo.<br>
+            <small>Verificá que el Google Sheet esté publicado correctamente.</small>
+          </div>`;
+      }
+    }
+
+    function formatPrice(val) {
+      if (!val && val !== 0) return '-';
+      const num = parseFloat(String(val).replace(/[^0-9.]/g, ''));
+      if (isNaN(num)) return val;
+      return '$' + Math.round(num).toLocaleString('es-AR');
+    }
+
+    function renderCatalog(products) {
+      // Agrupar por categoría
+      const cats = {};
+      products.forEach(p => {
+        if (!cats[p.cat]) cats[p.cat] = [];
+        cats[p.cat].push(p);
+      });
+
+      const nav = document.getElementById('catNav');
+      const main = document.getElementById('main');
+      nav.innerHTML = '';
+      main.innerHTML = '';
+
+      let first = true;
+      Object.entries(cats).forEach(([catName, items]) => {
+        const meta = CONFIG.CATEGORY_ICONS[catName] || { icon: '📦', color: '#546E7A', bg: '#ECEFF1' };
+
+        // Pill de navegación
+        const pill = document.createElement('button');
+        pill.className = 'cat-pill' + (first ? ' active' : '');
+        pill.style.borderColor = meta.color;
+        pill.style.color = first ? 'white' : meta.color;
+        if (first) pill.style.background = meta.color;
+        pill.textContent = meta.icon + ' ' + catName;
+        pill.onclick = () => {
+          document.querySelectorAll('.cat-pill').forEach(p => {
+            const m2 = CONFIG.CATEGORY_ICONS[p.dataset.cat] || { color: '#546E7A' };
+            p.classList.remove('active');
+            p.style.background = 'white';
+            p.style.color = m2.color;
+          });
+          pill.classList.add('active');
+          pill.style.background = meta.color;
+          pill.style.color = 'white';
+          document.getElementById('sec-' + catName).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+        pill.dataset.cat = catName;
+        nav.appendChild(pill);
+
+        // Sección de categoría
+        const sec = document.createElement('section');
+        sec.id = 'sec-' + catName;
+
+        const hdr = document.createElement('div');
+        hdr.className = 'cat-section-header';
+        hdr.style.background = meta.color;
+        hdr.innerHTML = `<span class="cat-section-icon">${meta.icon}</span><span class="cat-section-name">${catName.toUpperCase()}</span>`;
+        sec.appendChild(hdr);
+
+        const grid = document.createElement('div');
+        grid.className = 'products-grid';
+
+        items.forEach(p => {
+          const card = document.createElement('div');
+          card.className = 'product-card';
+
+          const imgFallback = meta.icon;
+          const imgHTML = p.foto
+            ? `<img src="${p.foto}" alt="${p.name}" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\\'no-img\\'>${imgFallback}</span>'">`
+            : `<span class="no-img">${imgFallback}</span>`;
+
+          card.innerHTML = `
+            <div class="product-img-wrap" style="background:${meta.bg}">${imgHTML}</div>
+            <div class="product-body">
+              <div class="product-name">${p.name}</div>
+              <div class="product-brand">${p.brand}</div>
+              ${p.present ? `<div class="product-present">${p.present}</div>` : ''}
+            </div>
+            <div class="prices-row">
+              <div class="price-box mayor">
+                <div class="price-lbl">Mayor</div>
+                <div class="price-val">${formatPrice(p.mayor)}</div>
+              </div>
+              <div class="price-divider-v"></div>
+              <div class="price-box menor">
+                <div class="price-lbl">Menor</div>
+                <div class="price-val">${formatPrice(p.menor)}</div>
+              </div>
+            </div>
+            ${p.estado === 'SIN STOCK' ? '<div class="sin-stock-overlay"><div class="sin-stock-badge">SIN STOCK</div></div>' : ''}
+          `;
+          grid.appendChild(card);
+        });
+
+        sec.appendChild(grid);
+        main.appendChild(sec);
+        first = false;
+      });
+    }
+
+    loadCatalog();
+  </script>
+</body>
+</html>
